@@ -27,7 +27,7 @@ type Props = {
   Volume: string;
 };
 
-const data = await csv("./DJI.csv");
+const data = await csv("DJI.csv");
 
 export class Chart {
   #doc: Record<string, any>[];
