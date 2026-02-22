@@ -1,8 +1,7 @@
-import "./style.css";
+import "./Calendar.ts";
 import {
   create,
   csv,
-  csvFormatValue,
   format,
   groups,
   interpolatePiYG,
@@ -18,6 +17,7 @@ import {
   type DSVRowArray,
   type ScaleSequential,
 } from "d3";
+import "./style.css";
 
 type Props = {
   Date: string;
@@ -88,7 +88,7 @@ export class Chart {
       .join("g")
       .attr(
         "transform",
-        (_, i) => `translate(40.5, ${this.#height * i + this.#cellSize * 1.5})`
+        (_, i) => `translate(40.5, ${this.#height * i + this.#cellSize * 1.5})`,
       );
 
     year
@@ -116,7 +116,7 @@ export class Chart {
       .append("g")
       .selectAll()
       .data(([_, item]) =>
-        item.filter((d) => ![0, 6].includes(d.date.getUTCDay()))
+        item.filter((d) => ![0, 6].includes(d.date.getUTCDay())),
       )
       .join("rect")
       .attr("width", this.#cellSize - 1)
@@ -124,11 +124,11 @@ export class Chart {
       .attr(
         "x",
         (d) =>
-          this.#timeWeek.count(utcYear(d.date), d.date) * this.#cellSize + 0.5
+          this.#timeWeek.count(utcYear(d.date), d.date) * this.#cellSize + 0.5,
       )
       .attr(
         "y",
-        (d) => this.#countDay(d.date.getUTCDay()) * this.#cellSize + 0.5
+        (d) => this.#countDay(d.date.getUTCDay()) * this.#cellSize + 0.5,
       )
       .attr("fill", (d) => this.#color(d.value))
 
@@ -139,7 +139,7 @@ export class Chart {
       .append("g")
       .selectAll()
       .data(([, values]) =>
-        utcMonths(utcMonth(values[0].date), values.at(-1).date)
+        utcMonths(utcMonth(values[0].date), values.at(-1).date),
       )
       .join("g");
 
@@ -158,7 +158,7 @@ export class Chart {
         (d) =>
           this.#timeWeek.count(utcYear(d), this.#timeWeek.ceil(d)) *
             this.#cellSize +
-          2
+          2,
       )
       .attr("fill", "white")
       .attr("y", -5)
@@ -175,7 +175,7 @@ export class Chart {
         value:
           (parseFloat(Close) - parseFloat(Previous)) / parseFloat(Previous),
         close: Close,
-      })
+      }),
     );
     this.#doc = data;
   }
